@@ -1,7 +1,11 @@
 package br.com.zup.casadocodigo.casadocodigo.controller;
 
 import br.com.zup.casadocodigo.casadocodigo.dto.LivroDto;
+import br.com.zup.casadocodigo.casadocodigo.entidades.Autor;
+import br.com.zup.casadocodigo.casadocodigo.entidades.Categoria;
 import br.com.zup.casadocodigo.casadocodigo.entidades.Livro;
+import br.com.zup.casadocodigo.casadocodigo.form.DetalheAutorForm;
+import br.com.zup.casadocodigo.casadocodigo.form.DetalheLivroForm;
 import br.com.zup.casadocodigo.casadocodigo.form.LivroForm;
 import br.com.zup.casadocodigo.casadocodigo.repositorios.LivroRepository;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +16,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+import java.lang.module.ResolutionException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,4 +54,19 @@ public class LivroController {
 
         return ResponseEntity.ok().body(livroForms);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<DetalheLivroForm> detalharLivro(@PathVariable Long id){
+        Optional<Livro> optional = this.livroRepository.findById(id);
+        if(optional.isPresent()) {
+            Livro livro = optional.get();
+            Autor autor = this.livroRepository.findAutorByLivroId(id);
+            Categoria categoria = this.livroRepository.findCategoriaByLivroId(id);
+
+            return ResponseEntity.ok().body(new DetalheLivroForm(livro,categoria,autor));
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
 }
