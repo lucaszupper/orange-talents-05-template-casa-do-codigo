@@ -23,20 +23,12 @@ import java.util.Optional;
 public class AutorController {
 
     private AutorRepository autorRepository;
-    private EmailDuplicadoValidator emailDuplicadoValidator;
 
-    public AutorController(AutorRepository autorRepository, EmailDuplicadoValidator emailDuplicadoValidator){
+
+    public AutorController(AutorRepository autorRepository){
         this.autorRepository = autorRepository;
-        this.emailDuplicadoValidator = emailDuplicadoValidator;
-    }
-    /*O @InitBinder informa que esse sempre sera o primeiro metodo a ser usado em uma requisacao
-    * */
-    @InitBinder
-    public void inicio(WebDataBinder webDataBinder){
-        webDataBinder.addValidators(emailDuplicadoValidator);
 
     }
-
 
     @PostMapping
     public ResponseEntity<AutorDto> novoAutor(@RequestBody @Valid AutorDto autorDto, UriComponentsBuilder uriComponentsBuilder){

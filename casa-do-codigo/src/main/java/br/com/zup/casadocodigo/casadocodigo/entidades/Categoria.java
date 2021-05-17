@@ -22,7 +22,7 @@ public class Categoria {
     public Long getId() {
         return id;
     }
-
+    @Column(unique = true, nullable = false)
     public String getNome() {
         return nome;
     }

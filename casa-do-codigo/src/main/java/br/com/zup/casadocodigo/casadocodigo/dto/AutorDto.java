@@ -1,6 +1,7 @@
 package br.com.zup.casadocodigo.casadocodigo.dto;
 
 import br.com.zup.casadocodigo.casadocodigo.entidades.Autor;
+import br.com.zup.casadocodigo.casadocodigo.validacao.UniqueValue;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.domain.Page;
 
@@ -11,7 +12,7 @@ import javax.validation.constraints.NotNull;
 public class AutorDto {
     @NotNull @NotBlank
     private String nome;
-    @NotNull @NotBlank @Email
+    @NotNull @NotBlank @Email @UniqueValue(domainClass = Autor.class, fieldName = "email", message = "Email duplicado")
     private String email;
     @NotNull @NotBlank @Length(max = 400)
     private String descricao;

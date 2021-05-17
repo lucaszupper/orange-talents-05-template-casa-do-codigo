@@ -19,16 +19,13 @@ import java.net.URI;
 public class CategoriaController {
 
     private CategoriaRepository categoriaRepository;
-    private NomeDuplicadoValidator nomeDuplicadoValidator;
-    public CategoriaController(CategoriaRepository categoriaRepository, NomeDuplicadoValidator nomeDuplicadoValidator){
+
+    public CategoriaController(CategoriaRepository categoriaRepository){
         this.categoriaRepository = categoriaRepository;
-        this.nomeDuplicadoValidator = nomeDuplicadoValidator;
+
     }
 
-    @InitBinder
-    public void inicio(WebDataBinder webDataBinder){
-        webDataBinder.addValidators(nomeDuplicadoValidator);
-    }
+
 
     @PostMapping
     public ResponseEntity<CategoriaDto> novo(@RequestBody @Valid CategoriaDto categoriaDto, UriComponentsBuilder builder){
