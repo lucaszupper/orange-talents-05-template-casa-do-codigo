@@ -40,15 +40,10 @@ public class AutorController {
 
     @PostMapping
     public ResponseEntity<AutorDto> novoAutor(@RequestBody @Valid AutorDto autorDto, UriComponentsBuilder uriComponentsBuilder){
-        try{
-            Autor autor = autorRepository.save(autorDto.toAutor());
-            URI uri =  uriComponentsBuilder.path("/autor?email={email}").buildAndExpand(autor.getEmail()).toUri();
-            return ResponseEntity.created(uri).body( new AutorDto(autor));
 
-         } catch (Exception e){
-            System.out.println(e.getMessage());
-            return ResponseEntity.badRequest().build();
-        }
+            Autor autor = autorRepository.save(autorDto.toAutor());
+            URI uri =  uriComponentsBuilder.path("/autor/{id}").buildAndExpand(autor.getId()).toUri();
+            return ResponseEntity.created(uri).body( new AutorDto(autor));
 
     }
 
