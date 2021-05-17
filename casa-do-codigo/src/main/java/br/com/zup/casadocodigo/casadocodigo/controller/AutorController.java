@@ -3,11 +3,13 @@ package br.com.zup.casadocodigo.casadocodigo.controller;
 import br.com.zup.casadocodigo.casadocodigo.dto.AutorDto;
 import br.com.zup.casadocodigo.casadocodigo.entidades.Autor;
 import br.com.zup.casadocodigo.casadocodigo.repositorios.AutorRepository;
+import br.com.zup.casadocodigo.casadocodigo.validacao.EmailDuplicadoValidator;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -21,10 +23,20 @@ import java.util.Optional;
 public class AutorController {
 
     private AutorRepository autorRepository;
+    private EmailDuplicadoValidator emailDuplicadoValidator;
 
-    public AutorController(AutorRepository autorRepository){
+    public AutorController(AutorRepository autorRepository, EmailDuplicadoValidator emailDuplicadoValidator){
         this.autorRepository = autorRepository;
+        this.emailDuplicadoValidator = emailDuplicadoValidator;
     }
+    /*O @InitBinder informa que esse sempre sera o primeiro metodo a ser usado em uma requisacao
+    * */
+    @InitBinder
+    public void inicio(WebDataBinder webDataBinder){
+        webDataBinder.addValidators(emailDuplicadoValidator);
+
+    }
+
 
     @PostMapping
     public ResponseEntity<AutorDto> novoAutor(@RequestBody @Valid AutorDto autorDto, UriComponentsBuilder uriComponentsBuilder){
