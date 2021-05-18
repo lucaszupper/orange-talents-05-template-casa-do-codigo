@@ -26,7 +26,7 @@ public class EstadoDto {
 
     public EstadoDto(Estado estado) {
         this.nome = estado.getNome();
-        this.idPais = estado.getId();
+        this.idPais = estado.getPais().getId();
     }
 
     public Estado toEstado(EntityManager manager){
