@@ -67,7 +67,7 @@ public class LivroDto {
         this.idAutor = idAutor;
     }
 
-    public LivroDto() {
+    private LivroDto() {
     }
 
     public String getTitulo() {
